@@ -1,0 +1,31 @@
+{
+  "phases": [
+    {
+      "title": "EXO-L MEMBERSHIP (GL) Pre-sale",
+      "buttonLabel": "8 April 2026",
+      "buttonColor": "#9ca3af",
+      "buttonTextColor": "#ffffff",
+      "buttonBorderColor": "#111111",
+      "startDate": "Starting 8 April 2026",
+      "startTime": "at 02.00 p.m"
+    },
+    {
+      "title": "Mastercard Priceless Pre-Sale",
+      "buttonLabel": "9 April 2026",
+      "buttonColor": "#9ca3af",
+      "buttonTextColor": "#ffffff",
+      "buttonBorderColor": "#9ca3af",
+      "startDate": "Starting 9 April 2026",
+      "startTime": "at 02.00 p.m"
+    },
+    {
+      "title": "General Sale",
+      "buttonLabel": "10 April 2026",
+      "buttonColor": "#9ca3af",
+      "buttonTextColor": "#ffffff",
+      "buttonBorderColor": "#9ca3af",
+      "startDate": "Starting 10 April 2026",
+      "startTime": "at 02.00 p.m"
+    }
+  ]
+}
