@@ -8,7 +8,7 @@ async def human_delay(min_ms=200, max_ms=800):
 async def execute():
     async with async_playwright() as p:
         browser = await p.chromium.launch(
-            channel="chrome",
+            channel="msedge",
             headless=False,
             args=[
                 '--disable-blink-features=AutomationControlled',
@@ -31,7 +31,7 @@ async def execute():
                 await human_delay(100, 300)
 
                 print("Mencari tombol...")
-                target = page.locator("button:has-text('9 April 2026')").first
+                target = page.locator("button:has-text('10 April 2026')").first
 
                 await target.wait_for(timeout=3000)
 

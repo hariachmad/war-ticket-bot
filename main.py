@@ -7,9 +7,9 @@ async def execute():
         page = await browser.new_page()
         
         while True:
-            await page.goto("http://localhost:3000", wait_until="load")
+            await page.goto("https://dyandraglobalstore-02.com/", wait_until="load")
             print("PAGE LOADED")
-            target = page.locator("button:has-text('9 April 2026')").first
+            target = page.locator("button:has-text('10 April 2026')").first
             
             try:
                 await target.wait_for(timeout=2000)

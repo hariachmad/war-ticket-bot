@@ -2,28 +2,43 @@ import asyncio
 from datetime import datetime, timedelta
 from patchright.async_api import async_playwright
 import random
+import sys
 
-TARGET_HOUR = 1
-TARGET_MINUTE = 13
-TARGET_SECOND = 45
+TARGET_HOUR = 13
+TARGET_MINUTE = 59
+TARGET_SECOND = 59
 
 async def wait_until_target():
-    now = datetime.now()
-    target = now.replace(
-        hour=TARGET_HOUR,
-        minute=TARGET_MINUTE,
-        second=TARGET_SECOND,
-        microsecond=0
-    )
+    while True:
+        now = datetime.now()
+        target = now.replace(
+            hour=TARGET_HOUR,
+            minute=TARGET_MINUTE,
+            second=TARGET_SECOND,
+            microsecond=0
+        )
 
-    # kalau waktu sudah lewat, target besok
-    if now >= target:
-        target += timedelta(days=1)
+        # kalau waktu sudah lewat, target besok
+        if now >= target:
+            target += timedelta(days=1)
 
-    wait_seconds = (target - now).total_seconds()
-    print(f"Menunggu {wait_seconds:.2f} detik sampai target time...")
-    
-    await asyncio.sleep(wait_seconds)
+        remaining = (target - now).total_seconds()
+
+        if remaining <= 0:
+            break
+
+        # hitung jam, menit, detik
+        hrs = int(remaining // 3600)
+        mins = int((remaining % 3600) // 60)
+        secs = int(remaining % 60)
+
+        # print countdown (overwrite line)
+        sys.stdout.write(f"\rCountdown: {hrs:02d}:{mins:02d}:{secs:02d}")
+        sys.stdout.flush()
+
+        await asyncio.sleep(1)
+
+    print("\nWaktu target tercapai!")
 
 
 async def execute():
@@ -39,17 +54,16 @@ async def execute():
         context = await browser.new_context()
         page = await context.new_page()
         
-        await page.goto("http://localhost:3000", wait_until="load")
+        await page.goto("https://dyandraglobalstore-02.com/", wait_until="load")
 
-        # ⏳ Tunggu sampai jam tertentu
         await wait_until_target()
 
         print("Mulai hunting tombol...")
 
         while True:
-            await page.goto("http://localhost:3000", wait_until="load")
+            await page.goto("https://dyandraglobalstore-02.com/", wait_until="load")
 
-            target = page.locator("button:has-text('9 April 2026')").first
+            target = page.locator("button:has-text('10 April 2026')").first
             
             try:
                 await target.wait_for(timeout=3000)
