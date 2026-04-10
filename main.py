@@ -21,6 +21,6 @@ async def execute():
                     break
             except:
                 print("Button belum ada")
-                await asyncio.sleep(0.1)
+                await asyncio.sleep(0.05)
         await asyncio.sleep(9999999999)
 asyncio.run(execute())
