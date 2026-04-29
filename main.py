@@ -49,14 +49,6 @@ async def execute():
         
         context = await browser.new_context()
         
-        async def block_resources(route):
-            if route.request.resource_type in ["image", "font", "media"]:
-                await route.abort()
-            else:
-                await route.continue_()
-
-        await context.route("**/*", block_resources)
-        
         page = await context.new_page()
         
         await page.goto("https://dyandraglobalstore-05.com/", wait_until="load")
