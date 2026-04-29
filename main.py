@@ -4,9 +4,9 @@ from patchright.async_api import async_playwright
 import random
 import sys
 
-TARGET_HOUR = 21
-TARGET_MINUTE = 15
-TARGET_SECOND = 00
+TARGET_HOUR = 8
+TARGET_MINUTE =16
+TARGET_SECOND = 30
 
 async def wait_until_target():
     now = datetime.now()
@@ -34,15 +34,13 @@ async def wait_until_target():
         sys.stdout.write(f"\rCountdown: {hrs:02d}:{mins:02d}:{secs:02d}")
         sys.stdout.flush()
 
-        await asyncio.sleep(0.1)
-
     print("\nWaktu target tercapai!")
 
 
 async def execute():
     async with async_playwright() as p:
         browser = await p.chromium.launch(
-            channel="msedge",
+            channel="chrome",
             headless=False,
             args=[
                 '--disable-blink-features=AutomationControlled',
@@ -50,16 +48,25 @@ async def execute():
         )
         
         context = await browser.new_context()
+        
+        async def block_resources(route):
+            if route.request.resource_type in ["image", "font", "media"]:
+                await route.abort()
+            else:
+                await route.continue_()
+
+        await context.route("**/*", block_resources)
+        
         page = await context.new_page()
         
-        await page.goto("http://localhost:3000", wait_until="load")
+        await page.goto("https://dyandraglobalstore-05.com/", wait_until="load")
 
         await wait_until_target()
 
         print("Mulai hunting tombol...")
 
         while True:
-            await page.goto("http://localhost:3000", wait_until="load")
+            await page.reload(wait_until="domcontentloaded")
 
             target = page.locator("button:has-text('29 April 2026')").first
             
@@ -75,8 +82,6 @@ async def execute():
 
             except:
                 print("Button belum ada")
-
-            await asyncio.sleep(random.uniform(0.01, 0.03))
 
         await asyncio.sleep(999999)
 
