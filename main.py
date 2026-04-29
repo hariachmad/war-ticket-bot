@@ -40,7 +40,7 @@ async def wait_until_target():
 async def execute():
     async with async_playwright() as p:
         browser = await p.chromium.launch(
-            channel="chrome",
+            channel="msedge",
             headless=False,
             args=[
                 '--disable-blink-features=AutomationControlled',
