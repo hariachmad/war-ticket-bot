@@ -4,9 +4,9 @@ from patchright.async_api import async_playwright
 import random
 import sys
 
-TARGET_HOUR = 8
-TARGET_MINUTE =16
-TARGET_SECOND = 30
+TARGET_HOUR = 11
+TARGET_MINUTE =59
+TARGET_SECOND = 57
 
 async def wait_until_target():
     now = datetime.now()
