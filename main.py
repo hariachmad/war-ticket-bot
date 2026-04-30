@@ -6,7 +6,7 @@ import sys
 
 TARGET_HOUR = 11
 TARGET_MINUTE =59
-TARGET_SECOND = 57
+TARGET_SECOND =57
 
 async def wait_until_target():
     now = datetime.now()
@@ -60,7 +60,7 @@ async def execute():
         while True:
             await page.reload(wait_until="domcontentloaded")
 
-            target = page.locator("button:has-text('29 April 2026')").first
+            target = page.locator("button:has-text('30 April 2026')").first
             
             try:
                 await target.wait_for(timeout=3000)
