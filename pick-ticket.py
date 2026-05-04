@@ -24,7 +24,7 @@ async def execute():
     async with async_playwright() as p:
         context = await p.chromium.launch_persistent_context(
             user_data_dir=SESSION_PATH,
-            channel="chrome",
+            channel="chrome", #kalau tidak ada ganti dengan "msedge"
             headless=False,
             args=[
                 '--disable-blink-features=AutomationControlled',
