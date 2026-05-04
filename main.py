@@ -6,7 +6,8 @@ import sys
 
 TARGET_HOUR = 11
 TARGET_MINUTE =59
-TARGET_SECOND =57
+TARGET_SECOND = 58
+SESSION_PATH = './shared-browser-session'
 
 async def wait_until_target():
     now = datetime.now()
@@ -39,15 +40,17 @@ async def wait_until_target():
 
 async def execute():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            channel="msedge",
+        context = await p.chromium.launch_persistent_context(
+            user_data_dir=SESSION_PATH,
+            channel="chrome",
             headless=False,
             args=[
                 '--disable-blink-features=AutomationControlled',
             ]
         )
         
-        context = await browser.new_context()
+        # context = await browser.new_context()
+
         
         page = await context.new_page()
         
@@ -60,7 +63,7 @@ async def execute():
         while True:
             await page.reload(wait_until="domcontentloaded")
 
-            target = page.locator("button:has-text('30 April 2026')").first
+            target = page.locator("a:has-text('5 Mei 2026')").first
             
             try:
                 await target.wait_for(timeout=3000)
