@@ -13,14 +13,16 @@ import asyncio
 membership_ready = False
 SESSION_PATH = './shared-browser-session'
 url = ""
-seat = ["Duality Package"]
-qty = ['2']
-membership = "ND475307598" #APABILA TIDAK ADA KOSONGKAN DENGAN ""
+seat = ["Duality Package", "CAT 1"]
+qty = ['4','2']
+membership = "" #APABILA TIDAK ADA KOSONGKAN DENGAN ""
+
 
 def ticket_selector(seat):
     return f'.ticket-item:has(h6:has-text("{seat}"))'
 
 async def execute():
+    found = False
     async with async_playwright() as p:
         context = await p.chromium.launch_persistent_context(
             user_data_dir=SESSION_PATH,
@@ -34,10 +36,11 @@ async def execute():
         page = await context.new_page()
         
         await page.goto(url, wait_until="load")
-        await asyncio.sleep(999999)
         
         while True:
+            
             await page.reload(wait_until="domcontentloaded")
+            print("Reloaded...")
             await asyncio.sleep(0.2)
             for i in range(len(seat)) :
                 await page.wait_for_selector(ticket_selector(seat[i]), timeout=3000)
@@ -71,6 +74,12 @@ async def execute():
                         else:
                             print("Submit Button not ready")
                     await page.click('#buy_ticket')
+                    found = True
+                    break
+            if found:
+                    break
+        await asyncio.sleep(999999)
+                
                 
             
 asyncio.run(execute())
