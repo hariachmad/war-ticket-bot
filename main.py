@@ -6,7 +6,7 @@ import sys
 
 TARGET_HOUR = 11
 TARGET_MINUTE =59
-TARGET_SECOND = 58
+TARGET_SECOND = 57
 SESSION_PATH = './shared-browser-session'
 
 async def wait_until_target():
@@ -63,7 +63,7 @@ async def execute():
         while True:
             await page.reload(wait_until="domcontentloaded")
 
-            target = page.locator("a:has-text('5 Mei 2026')").first
+            target = page.locator("button:has-text('6 Mei 2026')").first
             
             try:
                 await target.wait_for(timeout=3000)

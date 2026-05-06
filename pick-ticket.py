@@ -10,11 +10,11 @@ import asyncio
 # CAT 6
 # CAT 1
 
-membership_ready = True
+membership_ready = False
 SESSION_PATH = './shared-browser-session'
-url = "ISI DISINI"
-seat = ["CAT 4b","CAT 2b","CAT 3"]
-qty = ['2','2','2']
+url = ""
+seat = ["Duality Package"]
+qty = ['2']
 membership = "ND475307598" #APABILA TIDAK ADA KOSONGKAN DENGAN ""
 
 def ticket_selector(seat):
@@ -34,6 +34,7 @@ async def execute():
         page = await context.new_page()
         
         await page.goto(url, wait_until="load")
+        await asyncio.sleep(999999)
         
         while True:
             await page.reload(wait_until="domcontentloaded")
@@ -69,8 +70,8 @@ async def execute():
                             await btn.click()
                         else:
                             print("Submit Button not ready")
-                    # await page.click('#buy_ticket')
-                    await asyncio.sleep(999999)
+                    await page.click('#buy_ticket')
+                
             
 asyncio.run(execute())
 
