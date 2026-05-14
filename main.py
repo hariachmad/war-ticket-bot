@@ -34,6 +34,7 @@ async def wait_until_target():
 
         if remaining <= 0:
             break
+        await asyncio.sleep(0.1)
 
         hrs = int(remaining // 3600)
         mins = int((remaining % 3600) // 60)
@@ -65,7 +66,7 @@ async def execute():
         found = False
         
         await page.goto("https://dyandraglobalstore-04.com/", wait_until="load")
-
+        
         await wait_until_target()
 
         print("Mulai hunting tombol...")
@@ -73,10 +74,10 @@ async def execute():
         while True:
             await page.reload(wait_until="domcontentloaded")
 
-            target = page.locator("button:has-text('14 Mei 2026')").first
+            target = page.locator("button:has-text('15 Mei 2026')").first
             
             try:
-                await target.wait_for(timeout=3000)
+                await target.wait_for(timeout=100)
                 is_disabled = await target.is_disabled()
                 print("Disabled:", is_disabled)
 
@@ -90,12 +91,18 @@ async def execute():
         
         while True:
             try : 
-                locator = page.locator(
+                locator1 = page.locator(
                     "li",
                     has_text="Ticket Includes Government fee 10% and Platform fee 5%"
                 )
                 
-                if await locator.first.is_visible(timeout=500):
+                locator2 = page.locator('#buy_ticket')
+                
+                visible1 = await locator1.first.is_visible(timeout=100)
+                visible2 = await locator2.first.is_visible(timeout=100)
+                
+                if visible1 or visible2:
+                    print("Found Ticket Picking Page")
                     should_reload = False
                     for i in range(len(seat)) :
                         await page.wait_for_selector(ticket_selector(seat[i]), timeout=1000)
@@ -107,7 +114,7 @@ async def execute():
                         is_sold_out = "Sold Out" in text_content
                         is_fullbooked = "Fullbooked" in text_content
                         is_habis_terjual = "Habis Terjual" in text_content
-                        is_habis_dipesan = "Habis Dipesan" in text_content
+                        is_habis_dipesan = "Habis dipesan" in text_content
                         print(f"is_sold_out: {is_sold_out}, is_fullbooked: {is_fullbooked}, is_habis_terjual: {is_habis_terjual}, is_habis_dipesan: {is_habis_dipesan}")
                         if is_sold_out or is_fullbooked or is_habis_terjual or is_habis_dipesan:
                             print("Seat is SOLD OUT/ FULLBOOKED, skipping...")
@@ -120,6 +127,7 @@ async def execute():
                             await select_element.select_option(qty[i])
                             selected_value = await select_element.input_value()
                             print(f"Selected quantity: {selected_value}")
+                            await asyncio.sleep(0.5)
                             await page.click('#buy_ticket')
                             found = True
                             break
