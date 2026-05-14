@@ -4,9 +4,9 @@ from patchright.async_api import async_playwright
 import random
 import sys
 
-TARGET_HOUR = 11
-TARGET_MINUTE =59
-TARGET_SECOND = 57
+TARGET_HOUR = 23
+TARGET_MINUTE =57
+TARGET_SECOND = 0
 SESSION_PATH = './shared-browser-session'
 
 async def wait_until_target():
@@ -54,7 +54,7 @@ async def execute():
         
         page = await context.new_page()
         
-        await page.goto("https://dyandraglobalstore-05.com/", wait_until="load")
+        await page.goto("https://dyandraglobalstore-04.com/", wait_until="load")
 
         await wait_until_target()
 
@@ -63,7 +63,7 @@ async def execute():
         while True:
             await page.reload(wait_until="domcontentloaded")
 
-            target = page.locator("button:has-text('6 Mei 2026')").first
+            target = page.locator("button:has-text('14 Mei 2026')").first
             
             try:
                 await target.wait_for(timeout=3000)

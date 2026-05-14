@@ -11,8 +11,8 @@ import asyncio
 # CAT 1
 
 membership_ready = False
-SESSION_PATH = './shared-browser-session'
-url = ""
+SESSION_PATH = './shared-browser-session-2'
+url = "https://widget.loket.com/widget/5601fcaa078034c8ffac"
 seat = ["Duality Package", "CAT 1"]
 qty = ['4','2']
 membership = "" #APABILA TIDAK ADA KOSONGKAN DENGAN ""
