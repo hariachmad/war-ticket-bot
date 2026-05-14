@@ -4,9 +4,9 @@ from patchright.async_api import async_playwright
 import random
 import sys
 
-TARGET_HOUR = 23
-TARGET_MINUTE =57
-TARGET_SECOND = 0
+TARGET_HOUR = 11
+TARGET_MINUTE =59
+TARGET_SECOND = 58
 SESSION_PATH = './shared-browser-session'
 
 async def wait_until_target():
