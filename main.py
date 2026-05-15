@@ -4,13 +4,13 @@ from patchright.async_api import async_playwright
 import random
 import sys
 
-TARGET_HOUR = 11
-TARGET_MINUTE =59
-TARGET_SECOND = 58
+TARGET_HOUR = 12
+TARGET_MINUTE =0
+TARGET_SECOND = 0
 SESSION_PATH = './shared-browser-session'
 
 seat = ["CAT 1"]
-qty = ['2']
+qty = ['1']
 
 
 def ticket_selector(seat):
